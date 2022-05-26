@@ -11,17 +11,20 @@
 {% block title %}Hotel index{% endblock %}
 
 {% block body %}
-    <h1>Hotel index</h1>
-
-    <table class="table table-striped table-dark rounded-2 my-4" >
+    <h1>Hotels List</h1>
+    <form method="get" action="{{ path('app_hotel_search') }}">
+        <input name="query" placeholder="Search...">
+        <input type="submit" value="Search" >
+    </form>
+    <table class="table table-striped table-dark rounded-2 my-4">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Stars</th>
-                <th>Score</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Stars</th>
+            <th>Score</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for hotel in hotels %}

@@ -19,7 +19,21 @@
     </head>
     <body>
         <div class="container">
+            <nav class="navbar navbar-inverse bg-black d-flex">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Vafa's Company</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right d-flex">
+                        <li class="bg-white rounded-1"><a href="{{ path('app_register') }}"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+                        <li class="bg-white rounded-1"><a href="{{ path('app_login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </nav>
+            {{ knp_menu_render('main') }}
+
             {% block body %}
+
             {% endblock %}
         </div>
     </body>

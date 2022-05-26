@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Hotel;
 use App\Form\HotelType;
 use App\Repository\HotelRepository;
+use App\Service\Search;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/hotel')]
 class HotelController extends AbstractController
 {
+
     #[Route('/', name: 'app_hotel_index', methods: ['GET'])]
     public function index(HotelRepository $hotelRepository): Response
     {
         return $this->render('hotel/index.html.twig', [
             'hotels' => $hotelRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/search', name: 'app_hotel_search')]
+    public function search(Request $request, HotelRepository $repository, Search $search): Response
+    {
+        $q = $request->query->get('query');
+        if ($q) {
+            $hotels = $search->search($q);
+        } else {
+            $hotels = $repository->findAll();
+        }
+        return $this->render('hotel/index.html.twig', [
+            'hotels' => $hotels,
         ]);
     }
 
@@ -66,6 +82,7 @@ class HotelController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_hotel_delete', methods: ['POST'])]
     public function delete(Request $request, Hotel $hotel, HotelRepository $hotelRepository): Response
     {
@@ -75,4 +92,5 @@ class HotelController extends AbstractController
 
         return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
